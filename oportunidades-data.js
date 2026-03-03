@@ -13,7 +13,7 @@ const OPORTUNIDADES = [
         notas: 'Querétaro',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/49408/IMG_20260113_115429892_HDR.jpg'
     },
     {
         id: 'HA-42369',
@@ -29,7 +29,7 @@ const OPORTUNIDADES = [
         notas: 'Querétaro',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/49409/IMG_20260113_123014884_HDR.jpg'
     },
     {
         id: 'HA-41703',
@@ -45,7 +45,7 @@ const OPORTUNIDADES = [
         notas: 'Sinaloa',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/48739/ECO.10874-COSTADO IZQUIERDO.jpeg'
     },
     {
         id: 'HA-41704',
@@ -61,7 +61,7 @@ const OPORTUNIDADES = [
         notas: 'Estado de México',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/48740/IMG_20250515_115826129_HDR_AE.jpg'
     },
     {
         id: 'HA-41705',
@@ -77,7 +77,7 @@ const OPORTUNIDADES = [
         notas: 'Guanajuato',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/48741/20250702_140617.jpg'
     },
     {
         id: 'HA-42548',
@@ -93,7 +93,7 @@ const OPORTUNIDADES = [
         notas: 'Querétaro',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/49579/IMG20251024151311.jpg'
     },
     {
         id: 'HA-41706',
@@ -109,7 +109,7 @@ const OPORTUNIDADES = [
         notas: 'Baja California Sur',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/48742/IMG_20251112_160715697_HDR_AE.jpg'
     },
     {
         id: 'HA-41707',
@@ -125,7 +125,7 @@ const OPORTUNIDADES = [
         notas: 'Estado De Mexico',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/48743/IMG_20251113_143454137_HDR.jpg'
     },
     {
         id: 'HA-41709',
@@ -141,7 +141,7 @@ const OPORTUNIDADES = [
         notas: 'Quintana Roo',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/48745/WhatsApp Image 2025-10-22 at 3.12.38 PM (2).jpeg'
     },
     {
         id: 'HA-42549',
@@ -157,7 +157,7 @@ const OPORTUNIDADES = [
         notas: 'CDMX',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/49580/WhatsApp Image 2025-12-30 at 12.04.42 AM (4).jpeg'
     },
     {
         id: 'HA-41710',
@@ -173,7 +173,7 @@ const OPORTUNIDADES = [
         notas: 'Yucatán',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/48746/IMG-20251129-WA0029.jpg'
     },
     {
         id: 'HA-42646',
@@ -189,7 +189,7 @@ const OPORTUNIDADES = [
         notas: 'Monterrey',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/49679/IMG_20260108_135937904_HDR_AE.jpg'
     },
     {
         id: 'HA-42554',
@@ -205,7 +205,7 @@ const OPORTUNIDADES = [
         notas: 'Puebla',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/49585/1.jpeg'
     },
     {
         id: 'HA-41712',
@@ -221,7 +221,7 @@ const OPORTUNIDADES = [
         notas: 'Puebla',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/48926/1.jpeg'
     },
     {
         id: 'HA-42647',
@@ -237,6 +237,6 @@ const OPORTUNIDADES = [
         notas: 'Quintana Roo',
         disponible: true,
         fechaLimite: '2026-03-05',
-        foto: ''
+        foto: 'https://prod.subastashilcoacetec.mx/Subastas/BIENES/49680/1.jpg'
     }
 ];
