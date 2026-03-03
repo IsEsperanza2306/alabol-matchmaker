@@ -1367,20 +1367,21 @@
             <div class="match-details">
                 <div class="match-stats-row">
                     <div class="match-stat">
-                        <div class="match-stat-label">Valor de Mercado</div>
-                        <div class="match-stat-value" id="modalMarket"></div>
+                        <div class="match-stat-label">Estado Técnico</div>
+                        <div class="match-stat-value" id="modalDamage" style="font-size: 15px;"></div>
                     </div>
                     <div class="match-stat">
-                        <div class="match-stat-label">Tu Match Alabol</div>
-                        <div class="match-stat-value gold" id="modalAlabol"></div>
+                        <div class="match-stat-label">Tipo</div>
+                        <div class="match-stat-value gold" id="modalType"
+                            style="font-size: 15px; text-transform: capitalize;"></div>
                     </div>
                 </div>
 
                 <div class="match-stats-row" style="margin-bottom: 5px;">
                     <div class="match-stat"
-                        style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.3);">
-                        <div class="match-stat-label" style="color: var(--emerald);">Ahorro Proyectado</div>
-                        <div class="match-stat-value savings" id="modalSavings"></div>
+                        style="background: rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.3);">
+                        <div class="match-stat-label" style="color: var(--gold);">Cierre de Subasta</div>
+                        <div class="match-stat-value gold" id="modalDate" style="font-size: 16px;"></div>
                     </div>
                 </div>
 
@@ -1604,22 +1605,24 @@
             document.getElementById('modalYear').textContent = car.anio;
             document.getElementById('modalLocation').textContent = car.notas || ''; // Usually the state
 
-            document.getElementById('modalMarket').textContent = formatMoney(car.precioMercado);
-            document.getElementById('modalAlabol').textContent = formatMoney(car.precioTotal);
-            document.getElementById('modalSavings').textContent = formatMoney(car.ahorroMXN) + ' MXN';
-
-            // WhatsApp link
+            // Fetch Date
             const auctionDate = new Date(car.fechaLimite + 'T00:00:00');
             const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             const auctionDateStr = `${auctionDate.getDate()} de ${months[auctionDate.getMonth()]} ${auctionDate.getFullYear()}`;
 
+            // Inject Data
+            document.getElementById('modalDamage').textContent = car.danio;
+            document.getElementById('modalType').textContent = car.tipo;
+            document.getElementById('modalDate').textContent = auctionDateStr;
+
+            // WhatsApp link
             const msg = encodeURIComponent(
                 `¡Es un Match! 💖🚗 \n\n` +
-                `Hola Alabol 👋 me enamoré de este auto en subasta:\n` +
+                `Hola Alabol 👋 me enamoré de este vehículo en subasta:\n` +
                 `🚗 ${car.marca} ${car.modelo} ${car.anio}\n` +
-                `💰 Precio Match: ${formatMoney(car.precioTotal)} MXN\n` +
+                `📋 Condición: ${car.danio}\n` +
                 `📅 Subasta: ${auctionDateStr}\n\n` +
-                `¿Sigue disponible para entrar a la puja?`
+                `¿Podemos agendar una llamada para revisar los detalles y ver qué precio podríamos alcanzar?`
             );
 
             document.getElementById('modalMatchBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
