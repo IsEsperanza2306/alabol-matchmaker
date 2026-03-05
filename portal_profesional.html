@@ -1250,12 +1250,57 @@
             background: rgba(52, 152, 219, 0.15);
             box-shadow: 0 0 30px rgba(52, 152, 219, 0.4);
         }
+
+        /* Golden Bubbles Efervescence Effect */
+        .bubbles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.4) 0%, rgba(212, 175, 55, 0.1) 60%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: rise var(--duration) ease-in infinite;
+            opacity: 0;
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0) scale(var(--scale));
+                opacity: 0;
+            }
+
+            10% {
+                opacity: var(--max-opacity);
+            }
+
+            90% {
+                opacity: var(--max-opacity);
+            }
+
+            100% {
+                bottom: 110vh;
+                transform: translateX(calc(100px * var(--sway))) scale(var(--scale));
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
 <body>
     <!-- Background effects -->
     <div class="bg-effects"></div>
+    <div class="bubbles-container" id="bubbles-container"></div>
     <div class="scan-line"></div>
 
     <div class="container">
@@ -1646,6 +1691,37 @@
         // =====================
         setupFilters();
         renderCars();
+
+        // Generate Golden Bubbles Effect
+        function createBubbles() {
+            const container = document.getElementById('bubbles-container');
+            if (!container) return;
+            const bubbleCount = 40; // Number of bubbles
+
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+
+                const size = Math.random() * 60 + 20;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 15 + 10;
+                const delay = Math.random() * 20;
+                const maxOpacity = Math.random() * 0.5 + 0.2;
+                const sway = (Math.random() - 0.5) * 2;
+
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.setProperty('--duration', `${duration}s`);
+                bubble.style.setProperty('--scale', Math.random() * 0.5 + 0.5);
+                bubble.style.setProperty('--max-opacity', maxOpacity);
+                bubble.style.setProperty('--sway', sway);
+
+                container.appendChild(bubble);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', createBubbles);
     </script>
 </body>
 
