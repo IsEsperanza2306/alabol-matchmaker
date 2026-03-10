@@ -1309,7 +1309,7 @@
             <div class="logo-container">
                 <div class="logo-glow"></div>
                 <div class="logo-circle">
-                    <img src="logo-circular.png" alt="Alabol Car Broker">
+                    <img src="logo-alabol.png" alt="Alabol Car Broker">
                 </div>
             </div>
             <h1>Oportunidades de Subasta</h1>
@@ -1358,12 +1358,13 @@
         <div class="tools-banner">
             <div class="tools-label">🔥 Sube de Nivel</div>
             <div class="tools-links">
-                <a href="https://alabolcar.vip/#/calculadora" class="tool-link" target="_blank" rel="noopener">
+                <a href="https://alabolcar-hwh56g8k.manus.space/calculators" class="tool-link" target="_blank"
+                    rel="noopener">
                     <span class="tool-icon">📊</span>
-                    <span class="tool-text">Calculadora USA MxB</span>
+                    <span class="tool-text">Calculadoras Alabol</span>
                     <span class="tool-arrow">→</span>
                 </a>
-                <a href="https://alabolcar.vip/#/inventario" class="tool-link" target="_blank" rel="noopener">
+                <a href="./inventario.html" class="tool-link" target="_blank" rel="noopener">
                     <span class="tool-icon">🚗</span>
                     <span class="tool-text">Inventario Local</span>
                     <span class="tool-arrow">→</span>
@@ -1380,14 +1381,21 @@
         <div class="cars-grid" id="carsGrid"></div>
 
         <!-- No results -->
-        <div class="no-results" id="noResults" style="display:none;">
-            <div class="icon">🔍</div>
-            <p>No hay oportunidades con estos filtros</p>
-            <div class="sub">Intenta cambiar los filtros o revisa pronto — actualizamos seguido</div>
+        <div class="no-results" id="noResults"
+            style="display:none; text-align: center; padding: 60px 20px; background: rgba(212,175,55,0.05); border-radius: 20px; border: 1px dashed var(--glass-border); margin-bottom: 30px;">
+            <div class="icon" style="font-size: 50px; margin-bottom: 20px;">🔍💔</div>
+            <p style="font-size: 20px; font-weight: 700; color: white; margin-bottom: 10px;">¡No hay matches con estos
+                filtros!</p>
+            <div class="sub" style="color: var(--green-text); margin-bottom: 25px;">No te rindas, tu media naranja con
+                ruedas podría estar en nuestra red secreta.</div>
+            <a href="./formulario-match.html" class="tool-link vip"
+                style="display: inline-flex; max-width: 300px; margin: 0 auto; justify-content: center; background: linear-gradient(135deg, var(--gold), #f4e5b0); color: #050d09; font-weight: 800;">
+                💘 BUSCAR MI MEDIA NARANJA
+            </a>
         </div>
 
         <div class="footer">
-            <p>🔒 Alabol Car Broker · <a href="https://alabolcar.vip">alabolcar.vip</a></p>
+            <p>🔒 Alabol Car Broker · <a href="./index.html">alabolcar.vip</a></p>
             <a href="./formulario-match.html" class="cta-group-footer" target="_blank" rel="noopener">
                 💘 Encontremos tu "Auto Match" ideal
             </a>
@@ -1430,10 +1438,16 @@
                     </div>
                 </div>
 
-                <div class="match-actions">
-                    <button class="match-btn pass" onclick="closeMatchModal()">❌</button>
-                    <!-- <button class="match-btn super">⭐</button> -->
-                    <a href="#" id="modalMatchBtn" class="match-btn like" target="_blank" rel="noopener">💖</a>
+                <div class="match-actions" style="flex-direction: column; gap: 15px;">
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                        <button class="match-btn pass" onclick="closeMatchModal()" style="flex: 1;">❌</button>
+                        <a href="#" id="modalMatchBtn" class="match-btn like" target="_blank" rel="noopener"
+                            style="flex: 2;">💖 ME INTERESA</a>
+                    </div>
+                    <a href="./formulario-match.html"
+                        style="text-decoration: none; color: var(--gold); font-size: 13px; font-weight: 600; text-align: center; display: block; padding: 10px; border: 1px solid var(--glass-border); border-radius: 12px; background: rgba(212,175,55,0.05);">
+                        💘 ¿No es tu media naranja? Haz Match con otro
+                    </a>
                 </div>
             </div>
         </div>

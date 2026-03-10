@@ -51,11 +51,13 @@
             --bg-mid: #0d2921;
             --bg-light: #0f3329;
             --gold: #d4af37;
+            --gold-bright: #F4E5B0;
             --gold-light: #f4e5b0;
             --gold-dim: rgba(212, 175, 55, 0.3);
             --green-text: #a8c5b8;
             --glass-bg: rgba(15, 51, 41, 0.5);
             --glass-border: rgba(212, 175, 55, 0.25);
+            --premium-gradient: linear-gradient(135deg, #D4AF37 0%, #F4E5B0 50%, #D4AF37 100%);
         }
 
         * {
@@ -187,16 +189,67 @@
             }
         }
 
+        /* --- PREMIUM BUTTONS SYSTEM --- */
+        .btn-premium-gold {
+            background: var(--premium-gradient);
+            background-size: 200% auto;
+            color: #000 !important;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-premium-gold:hover {
+            transform: translateY(-3px) scale(1.02);
+            background-position: right center;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-premium-teal {
+            background: rgba(13, 148, 136, 0.1);
+            color: #fff !important;
+            border: 1px solid #0d9488;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+            font-size: 12px;
+        }
+
+        .btn-premium-teal:hover {
+            background: #0d9488;
+            box-shadow: 0 0 15px rgba(13, 148, 136, 0.4);
+        }
+
         /* Ecosystem Nav */
         .match-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             animation: fadeInDown 0.6s ease-out;
         }
 
-        .match-nav a {
+        .match-nav a:not(.btn-premium-teal) {
             color: var(--green-text);
             text-decoration: none;
             font-size: 13px;
@@ -208,14 +261,6 @@
         }
 
         .match-nav a:hover {
-            color: var(--gold);
-        }
-
-        .match-nav .portal-link {
-            background: rgba(212, 175, 55, 0.1);
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
             color: var(--gold);
         }
 
@@ -1494,6 +1539,7 @@
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
@@ -1502,8 +1548,10 @@
 
     <div class="container">
         <div class="match-nav">
-            <a href="./index.html">← Volver al Inicio</a>
-            <a href="./portal_profesional.html" class="portal-link">Ver catálogo público</a>
+            <a href="./index.html"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+            <a href="./portal_profesional.html" class="btn-premium-teal">
+                <i class="fa-solid fa-gavel"></i> Portal Subastas
+            </a>
         </div>
 
         <!-- VIP Badge -->
@@ -1523,7 +1571,7 @@
                 <div class="logo-container">
                     <div class="logo-glow"></div>
                     <div class="logo-circle">
-                        <img src="logo-circular.png" alt="Alabol Car Broker">
+                        <img src="logo-alabol.png" alt="Alabol Car Broker">
                     </div>
                 </div>
                 <h1>ALABOL MATCHMAKER</h1>
@@ -1546,368 +1594,344 @@
                 <div class="progress-label" id="progressLabel">1 / 5</div>
             </div>
 
-            <form id="vipForm" autocomplete="off">
-                <!-- STEP 1: Contact Info -->
-                <div class="step active" data-step="0">
-                    <div class="step-header">
-                        <div class="step-icon">👤</div>
-                        <div class="step-title">Paso 1: ¿Quién eres tú?</div>
-                        <div class="step-subtitle">Para presentarte a tu próximo gran amor sobre ruedas</div>
-                    </div>
-                    <div class="form-group">
-                        <label>Nombre <span class="required">*</span></label>
-                        <input type="text" id="nombre" placeholder="Tu nombre completo" required>
-                    </div>
-                    <div class="form-group">
-                        <label>WhatsApp <span class="required">*</span></label>
-                        <input type="tel" id="whatsapp" placeholder="+52 1 55 1234 5678" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Ciudad / Estado <span class="required">*</span></label>
-                        <input type="text" id="ciudad" placeholder="Ej: Monterrey, NL" required>
-                    </div>
+            <div id="personalityHook"
+                style="text-align: center; margin-bottom: 20px; min-height: 24px; color: var(--gold-bright); font-size: 0.85rem; font-weight: 500; font-style: italic; opacity: 0; transition: opacity 0.5s;">
+                "Excelente inicio, vamos por tu auto ideal..."
+            </div>
+        </div>
+        <form id="vipForm" autocomplete="off">
+            <!-- STEP 1: Contact Info -->
+            <div class="step active" data-step="0">
+                <div class="step-header">
+                    <div class="step-icon">👤</div>
+                    <div class="step-title">Paso 1: ¿Quién eres tú?</div>
+                    <div class="step-subtitle">Para presentarte a tu próximo gran amor sobre ruedas</div>
                 </div>
-
-                <!-- STEP 2: Vehicle Type & Brand -->
-                <div class="step" data-step="1">
-                    <div class="step-header">
-                        <div class="step-icon">🚘</div>
-                        <div class="step-title">¿Cuál es tu tipo ideal?</div>
-                        <div class="step-subtitle">Elige la carrocería que te acelera el corazón</div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tipo de vehículo <span class="required">*</span></label>
-                        <div class="option-list" id="tipoVehiculo">
-                            <div class="option-card" data-value="sedan">
-                                <span class="option-icon">🚗</span>
-                                <div class="option-text">
-                                    <div class="main">Sedán</div>
-                                    <div class="sub">Camry, Civic, Corolla, Altima...</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                            <div class="option-card" data-value="suv">
-                                <span class="option-icon">🚙</span>
-                                <div class="option-text">
-                                    <div class="main">SUV / Camioneta</div>
-                                    <div class="sub">CR-V, RAV4, Explorer, Highlander...</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                            <div class="option-card" data-value="pickup">
-                                <span class="option-icon">🛻</span>
-                                <div class="option-text">
-                                    <div class="main">Pick-up</div>
-                                    <div class="sub">RAM, F-150, Silverado, Tacoma...</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                            <div class="option-card" data-value="deportivo">
-                                <span class="option-icon">🏎️</span>
-                                <div class="option-text">
-                                    <div class="main">Deportivo / Lujo</div>
-                                    <div class="sub">Mustang, Camaro, BMW, Mercedes...</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Marcas preferidas (selecciona varias)</label>
-                        <div class="brand-grid" id="marcasGrid">
-                            <!-- Popular brands with logos -->
-                            <div class="brand-card" data-value="Nissan">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Nissan_logo.png"
-                                    alt="Nissan">
-                            </div>
-                            <div class="brand-card" data-value="Volkswagen">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Volkswagen_Logo_till_1995.svg"
-                                    alt="Volkswagen">
-                            </div>
-                            <div class="brand-card" data-value="Chevrolet">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Chevrolet-logo.png/640px-Chevrolet-logo.png"
-                                    alt="Chevrolet">
-                            </div>
-                            <div class="brand-card" data-value="Toyota">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Toyota_carlogo.svg/512px-Toyota_carlogo.svg.png"
-                                    alt="Toyota">
-                            </div>
-                            <div class="brand-card" data-value="Kia">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/KIA_logo2.svg/512px-KIA_logo2.svg.png"
-                                    alt="Kia">
-                            </div>
-                            <div class="brand-card" data-value="Honda">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Honda_Logo.svg/512px-Honda_Logo.svg.png"
-                                    alt="Honda">
-                            </div>
-                            <div class="brand-card" data-value="Mazda">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Mazda_Logo.svg/512px-Mazda_Logo.svg.png"
-                                    alt="Mazda">
-                            </div>
-                            <div class="brand-card" data-value="Ford">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Ford_Motor_Company_Logo.svg/512px-Ford_Motor_Company_Logo.svg.png"
-                                    alt="Ford">
-                            </div>
-                        </div>
-                        <div style="margin-top: 15px;">
-                            <select id="selMasMarcas" class="styled-input">
-                                <option value="">+ Más Marcas (Desplegable)</option>
-                                <!-- Injected via JS -->
-                            </select>
-                        </div>
-                        <p class="helper-text">Toca los logos para seleccionar tus favoritas</p>
-                    </div>
+                <div class="form-group"><label>Nombre <span class="required">*</span></label><input type="text"
+                        id="nombre" placeholder="Tu nombre completo" required></div>
+                <div class="form-group"><label>WhatsApp <span class="required">*</span></label><input type="tel"
+                        id="whatsapp" placeholder="+52 1 55 1234 5678" required></div>
+                <div class="form-group"><label>Ciudad / Estado <span class="required">*</span></label><input type="text"
+                        id="ciudad" placeholder="Ej: Monterrey, NL" required></div>
+            </div>
+            <!-- STEP 2: Vehicle Type & Brand -->
+            <div class="step" data-step="1">
+                <div class="step-header">
+                    <div class="step-icon">🚘</div>
+                    <div class="step-title">¿Cuál es tu tipo ideal?</div>
+                    <div class="step-subtitle">Elige la carrocería que te acelera el corazón</div>
                 </div>
-
-                <!-- STEP 3: Specifics -->
-                <div class="step" data-step="2">
-                    <div class="step-header">
-                        <div class="step-icon">📋</div>
-                        <div class="step-title">Lo que te enamora</div>
-                        <div class="step-subtitle">Los detalles importan para un match perfecto 💖</div>
-                    </div>
-                    <div class="form-group" id="groupModelos" style="display: none;">
-                        <label>¿Tienes a un modelo en mente?</label>
-                        <div class="chip-grid" id="modelosGrid">
-                            <!-- Injected dynamically based on selected brands -->
-                        </div>
-                        <p class="helper-text">Déjalo vacío si estás abierto a conocer nuevos modelos de las marcas que
-                            elegiste</p>
-                    </div>
-                    <div class="form-group">
-                        <label>Rango de año <span class="required">*</span></label>
-                        <div class="range-row">
-                            <select id="anioDesde">
-                                <option value="">Desde...</option>
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
-                                <option value="2020">2020</option>
-                                <option value="2019">2019</option>
-                                <option value="2018" selected>2018</option>
-                                <option value="2017">2017</option>
-                                <option value="2016">2016</option>
-                                <option value="2015">2015</option>
-                                <option value="2014">2014</option>
-                                <option value="2013">2013</option>
-                                <option value="2012">2012</option>
-                            </select>
-                            <select id="anioHasta">
-                                <option value="">Hasta...</option>
-                                <option value="2026" selected>2026</option>
-                                <option value="2025">2025</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
-                                <option value="2022">2022</option>
-                                <option value="2021">2021</option>
-                                <option value="2020">2020</option>
-                                <option value="2019">2019</option>
-                                <option value="2018">2018</option>
-                                <option value="2017">2017</option>
-                                <option value="2016">2016</option>
-                                <option value="2015">2015</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Atributos innegociables (Green Flags)</label>
-                        <div class="chip-grid" id="caracteristicasGrid">
-                            <div class="chip" data-value="automatico"><span class="chip-icon">⚙️</span>Automático</div>
-                            <div class="chip" data-value="4x4"><span class="chip-icon">🏔️</span>4x4 / AWD</div>
-                            <div class="chip" data-value="bajo_millaje"><span class="chip-icon">📏</span>Bajo Millaje
+                <div class="form-group"><label>Tipo de vehículo <span class="required">*</span></label>
+                    <div class="option-list" id="tipoVehiculo">
+                        <div class="option-card" data-value="sedan"><span class="option-icon">🚗</span>
+                            <div class="option-text">
+                                <div class="main">Sedán</div>
+                                <div class="sub">Camry,
+                                    Civic,
+                                    Corolla,
+                                    Altima...</div>
                             </div>
-                            <div class="chip" data-value="piel"><span class="chip-icon">💺</span>Piel</div>
-                            <div class="chip" data-value="techo"><span class="chip-icon">☀️</span>T. Solar</div>
-                            <div class="chip" data-value="no_importa"><span class="chip-icon">👍</span>Flexible</div>
+                            <div class="check"></div>
+                        </div>
+                        <div class="option-card" data-value="suv"><span class="option-icon">🚙</span>
+                            <div class="option-text">
+                                <div class="main">SUV / Camioneta</div>
+                                <div class="sub">CR-V,
+                                    RAV4,
+                                    Explorer,
+                                    Highlander...</div>
+                            </div>
+                            <div class="check"></div>
+                        </div>
+                        <div class="option-card" data-value="pickup"><span class="option-icon">🛻</span>
+                            <div class="option-text">
+                                <div class="main">Pick-up</div>
+                                <div class="sub">RAM,
+                                    F-150,
+                                    Silverado,
+                                    Tacoma...</div>
+                            </div>
+                            <div class="check"></div>
+                        </div>
+                        <div class="option-card" data-value="deportivo"><span class="option-icon">🏎️</span>
+                            <div class="option-text">
+                                <div class="main">Deportivo / Lujo</div>
+                                <div class="sub">Mustang,
+                                    Camaro,
+                                    BMW,
+                                    Mercedes...</div>
+                            </div>
+                            <div class="check"></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- STEP 4: Budget -->
-                <div class="step" data-step="3">
-                    <div class="step-header">
-                        <div class="step-icon">💰</div>
-                        <div class="step-title">¿De cuánto es tu presupuesto?</div>
-                        <div class="step-subtitle">Saber esto nos ahorra citas a ciegas inalcanzables</div>
+                <div class="form-group"><label>Marcas preferidas (selecciona varias)</label>
+                    <div class="brand-grid" id="marcasGrid">
+                        <!-- Popular brands with logos -->
+                        <div class="brand-card" data-value="Nissan"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Nissan_logo.png" alt="Nissan">
+                        </div>
+                        <div class="brand-card" data-value="Volkswagen"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Volkswagen_Logo_till_1995.svg"
+                                alt="Volkswagen"></div>
+                        <div class="brand-card" data-value="Chevrolet"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Chevrolet-logo.png/640px-Chevrolet-logo.png"
+                                alt="Chevrolet"></div>
+                        <div class="brand-card" data-value="Toyota"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Toyota_carlogo.svg/512px-Toyota_carlogo.svg.png"
+                                alt="Toyota"></div>
+                        <div class="brand-card" data-value="Kia"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/KIA_logo2.svg/512px-KIA_logo2.svg.png"
+                                alt="Kia"></div>
+                        <div class="brand-card" data-value="Honda"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Honda_Logo.svg/512px-Honda_Logo.svg.png"
+                                alt="Honda"></div>
+                        <div class="brand-card" data-value="Mazda"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Mazda_Logo.svg/512px-Mazda_Logo.svg.png"
+                                alt="Mazda"></div>
+                        <div class="brand-card" data-value="Ford"><img
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Ford_Motor_Company_Logo.svg/512px-Ford_Motor_Company_Logo.svg.png"
+                                alt="Ford"></div>
                     </div>
-                    <div class="form-group">
-                        <label>Rango de Presupuesto Exacto (MXN) <span class="required">*</span></label>
-                        <div
-                            style="background: rgba(0,0,0,0.2); padding: 25px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); margin-top: 15px;">
-                            <div class="budget-display">
-                                <span id="budgetMinDisplay">$150,000</span>
-                                <span>-</span>
-                                <span id="budgetMaxDisplay">$350,000</span>
-                            </div>
-                            <div class="range-slider">
-                                <div class="slider-track"></div>
-                                <div class="slider-fill" id="sliderFill"></div>
-                                <input type="range" id="inputMin" min="80000" max="1500000" value="150000" step="10000"
-                                    oninput="updateSliders()">
-                                <input type="range" id="inputMax" min="80000" max="1500000" value="350000" step="10000"
-                                    oninput="updateSliders()">
-                            </div>
-                            <p class="helper-text" style="text-align: center; margin-top: 15px; margin-bottom: 0;">
-                                Desliza para ajustar tu presupuesto</p>
+                    <div style="margin-top: 15px;"><select id="selMasMarcas" class="styled-input">
+                            <option value="">+Más Marcas (Desplegable)</option>
+                            <!-- Injected via JS -->
+                        </select></div>
+                    <p class="helper-text">Toca los logos para seleccionar tus favoritas</p>
+                </div>
+            </div>
+            <!-- STEP 3: Specifics -->
+            <div class="step" data-step="2">
+                <div class="step-header">
+                    <div class="step-icon">📋</div>
+                    <div class="step-title">Lo que te enamora</div>
+                    <div class="step-subtitle">Los detalles importan para un match perfecto 💖</div>
+                </div>
+                <div class="form-group" id="groupModelos" style="display: none;"><label>¿Tienes a un modelo
+                        en mente?</label>
+                    <div class="chip-grid" id="modelosGrid">
+                        <!-- Injected dynamically based on selected brands -->
+                    </div>
+                    <p class="helper-text">Déjalo vacío si estás abierto a conocer nuevos modelos de las
+                        marcas que elegiste</p>
+                </div>
+                <div class="form-group"><label>Rango de año <span class="required">*</span></label>
+                    <div class="range-row"><select id="anioDesde">
+                            <option value="">Desde...</option>
+                            <option value="2026">2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018" selected>2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                        </select><select id="anioHasta">
+                            <option value="">Hasta...</option>
+                            <option value="2026" selected>2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                        </select></div>
+                </div>
+                <div class="form-group"><label>Atributos innegociables (Green Flags)</label>
+                    <div class="chip-grid" id="caracteristicasGrid">
+                        <div class="chip" data-value="automatico"><span class="chip-icon">⚙️</span>Automático</div>
+                        <div class="chip" data-value="4x4"><span class="chip-icon">🏔️</span>4x4 / AWD</div>
+                        <div class="chip" data-value="bajo_millaje"><span class="chip-icon">📏</span>Bajo
+                            Millaje </div>
+                        <div class="chip" data-value="piel"><span class="chip-icon">💺</span>Piel</div>
+                        <div class="chip" data-value="techo"><span class="chip-icon">☀️</span>T. Solar</div>
+                        <div class="chip" data-value="no_importa"><span class="chip-icon">👍</span>Flexible
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>¿Ya tienes el dinero? <span class="required">*</span></label>
-                        <div class="option-list" id="dineroListo">
-                            <div class="option-card" data-value="si" data-priority="alta">
-                                <span class="option-icon">✅</span>
-                                <div class="option-text">
-                                    <div class="main">Sí, dinero en mano</div>
-                                    <div class="sub">Listo para comprar cuando aparezca el auto</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                            <div class="option-card" data-value="pronto" data-priority="media">
-                                <span class="option-icon">⏳</span>
-                                <div class="option-text">
-                                    <div class="main">Lo tendré en 1-2 semanas</div>
-                                    <div class="sub">Casi listo</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                            <div class="option-card" data-value="ahorrando" data-priority="baja">
-                                <span class="option-icon">🏦</span>
-                                <div class="option-text">
-                                    <div class="main">Estoy ahorrando</div>
-                                    <div class="sub">Quiero ir viendo opciones</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
-                <!-- STEP 5: Use & Notes -->
-                <div class="step" data-step="4">
-                    <div class="step-header">
-                        <div class="step-icon">🎯</div>
-                        <div class="step-title">¿Qué tipo de relación buscas?</div>
-                        <div class="step-subtitle">El contexto lo es todo</div>
-                    </div>
-                    <div class="form-group">
-                        <label>¿Para qué es el auto? <span class="required">*</span></label>
-                        <div class="option-list" id="usoAuto">
-                            <div class="option-card" data-value="personal">
-                                <span class="option-icon">💘</span>
-                                <div class="option-text">
-                                    <div class="main">Amor verdadero (Uso personal)</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                            <div class="option-card" data-value="negocio">
-                                <span class="option-icon">💼</span>
-                                <div class="option-text">
-                                    <div class="main">Relación formal (Trabajo / Negocio)</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                            <div class="option-card" data-value="reventa">
-                                <span class="option-icon">😉</span>
-                                <div class="option-text">
-                                    <div class="main">Aventura a corto plazo (Reventa / Inversión)</div>
-                                </div>
-                                <div class="check"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>¿Algo más que debamos saber? (opcional)</label>
-                        <textarea id="notas"
-                            placeholder="Ej: Prefiero color blanco o negro, necesito que sea de bajo consumo, quiero un auto para Uber..."></textarea>
-                    </div>
+            </div>
+            <!-- STEP 4: Budget -->
+            <div class="step" data-step="3">
+                <div class="step-header">
+                    <div class="step-icon">💰</div>
+                    <div class="step-title">¿De cuánto es tu presupuesto?</div>
+                    <div class="step-subtitle">Saber esto nos ahorra citas a ciegas inalcanzables</div>
                 </div>
-            </form>
-
-            <!-- Success Screen (Fallback if 0 matches) -->
-            <div class="success-screen" id="successScreen">
-                <div class="success-icon">💘</div>
-                <div class="success-title">¡Cupido está trabajando!</div>
-                <div class="success-message">
-                    Tomamos nota de tus preferencias. Nuestro algoritmo buscará activamente en la red de agencias para
-                    encontrar tu match perfecto. Te avisaremos pronto.
-                </div>
-                <div class="success-summary" id="summaryBox">
-                    <h3>📋 Tu búsqueda</h3>
-                </div>
-
-                <!-- Urgency block: client initiates WhatsApp -->
-                <div
-                    style="background:linear-gradient(135deg,#0d2e1a,#1a4d2e);border:1px solid #25D366;border-radius:16px;padding:20px;margin:20px 0;text-align:center">
+                <div class="form-group"><label>Rango de Presupuesto Exacto (MXN) <span class="required">*</span></label>
                     <div
-                        style="font-size:13px;color:#a0d4b0;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase">
-                        ⚡ Respuesta garantizada</div>
-                    <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:4px">Nos contactamos contigo en
-                        <span style="color:#25D366" id="responseTimer">30 min</span>
+                        style="background: rgba(0,0,0,0.2); padding: 25px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); margin-top: 15px;">
+                        <div class="budget-display"><span id="budgetMinDisplay">$150,
+                                000</span><span>-</span><span id="budgetMaxDisplay">$350,
+                                000</span></div>
+                        <div class="range-slider">
+                            <div class="slider-track"></div>
+                            <div class="slider-fill" id="sliderFill"></div><input type="range" id="inputMin" min="80000"
+                                max="1500000" value="150000" step="10000" oninput="updateSliders()"><input type="range"
+                                id="inputMax" min="80000" max="1500000" value="350000" step="10000"
+                                oninput="updateSliders()">
+                        </div>
+                        <p class="helper-text" style="text-align: center; margin-top: 15px; margin-bottom: 0;">Desliza
+                            para
+                            ajustar tu presupuesto</p>
                     </div>
-                    <div style="font-size:13px;color:#a0d4b0;margin-bottom:16px">¿Tienes prisa? Escríbenos ahora y te
-                        respondemos de inmediato 👇</div>
-                    <a href="https://wa.me/525568667571?text=Hola%2C%20acabo%20de%20llenar%20el%20Matchmaker%20de%20Alabol%20y%20quiero%20hablar%20con%20un%20asesor%20%F0%9F%9A%97"
-                        target="_blank"
-                        style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:16px 32px;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;box-shadow:0 0 20px rgba(37,211,102,0.4);animation:waPulse 2s infinite">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                            <path
-                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
-                        </svg>
-                        Escribir por WhatsApp Ahora
-                    </a>
                 </div>
+                <div class="form-group"><label>¿Ya tienes el dinero? <span class="required">*</span></label>
+                    <div class="option-list" id="dineroListo">
+                        <div class="option-card" data-value="si" data-priority="alta"><span class="option-icon">✅</span>
+                            <div class="option-text">
+                                <div class="main">Sí,
+                                    dinero en mano</div>
+                                <div class="sub">Listo para comprar cuando aparezca el auto</div>
+                            </div>
+                            <div class="check"></div>
+                        </div>
+                        <div class="option-card" data-value="pronto" data-priority="media"><span
+                                class="option-icon">⏳</span>
+                            <div class="option-text">
+                                <div class="main">Lo tendré en 1-2 semanas</div>
+                                <div class="sub">Casi listo</div>
+                            </div>
+                            <div class="check"></div>
+                        </div>
+                        <div class="option-card" data-value="ahorrando" data-priority="baja"><span
+                                class="option-icon">🏦</span>
+                            <div class="option-text">
+                                <div class="main">Estoy ahorrando</div>
+                                <div class="sub">Quiero ir viendo opciones</div>
+                            </div>
+                            <div class="check"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- STEP 5: Use & Notes -->
+            <div class="step" data-step="4">
+                <div class="step-header">
+                    <div class="step-icon">🎯</div>
+                    <div class="step-title">¿Qué tipo de relación buscas?</div>
+                    <div class="step-subtitle">El contexto lo es todo</div>
+                </div>
+                <div class="form-group"><label>¿Para qué es el auto? <span class="required">*</span></label>
+                    <div class="option-list" id="usoAuto">
+                        <div class="option-card" data-value="personal"><span class="option-icon">💘</span>
+                            <div class="option-text">
+                                <div class="main">Amor verdadero (Uso personal)</div>
+                            </div>
+                            <div class="check"></div>
+                        </div>
+                        <div class="option-card" data-value="negocio"><span class="option-icon">💼</span>
+                            <div class="option-text">
+                                <div class="main">Relación formal (Trabajo / Negocio)</div>
+                            </div>
+                            <div class="check"></div>
+                        </div>
+                        <div class="option-card" data-value="reventa"><span class="option-icon">😉</span>
+                            <div class="option-text">
+                                <div class="main">Aventura a corto plazo (Reventa / Inversión)</div>
+                            </div>
+                            <div class="check"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"><label>¿Algo más que debamos saber?
+                        (opcional)</label><textarea id="notas"
+                        placeholder="Ej: Prefiero color blanco o negro, necesito que sea de bajo consumo, quiero un auto para Uber..."></textarea>
+                </div>
+            </div>
+        </form>
+        <!-- Success Screen (Fallback if 0 matches) -->
+        <div class="success-screen" id="successScreen">
+            <div class="success-icon">💘</div>
+            <div class="success-title">¡Cupido está trabajando !</div>
+            <div class="success-message">Tomamos nota de tus preferencias. Nuestro algoritmo buscará activamente en
+                la red de agencias para encontrar tu match perfecto. Te avisaremos pronto. </div>
+            <div class="success-summary" id="summaryBox">
+                <h3>📋 Tu búsqueda</h3>
+            </div>
+            <!-- Urgency block: client initiates WhatsApp -->
+            <div
+                style="background:linear-gradient(135deg,#0d2e1a,#1a4d2e);border:1px solid #25D366;border-radius:16px;padding:20px;margin:20px 0;text-align:center">
+                <div style="font-size:13px;color:#a0d4b0;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase">
+                    ⚡ Respuesta garantizada</div>
+                <div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:4px">Nos contactamos contigo
+                    en <span style="color:#25D366" id="responseTimer">30 min</span></div>
+                <div style="font-size:13px;color:#a0d4b0;margin-bottom:16px">¿Tienes prisa? Escríbenos ahora y
+                    te respondemos de inmediato 👇</div><a
+                    href="https://wa.me/525568667571?text=Hola%2C%20acabo%20de%20llenar%20el%20Matchmaker%20de%20Alabol%20y%20quiero%20hablar%20con%20un%20asesor%20%F0%9F%9A%97"
+                    target="_blank"
+                    style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:16px 32px;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;box-shadow:0 0 20px rgba(37,211,102,0.4);animation:waPulse 2s infinite"><svg
+                        width="24" height="24" viewBox="0 0 24 24" fill="white">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                    </svg>Escribir por WhatsApp Ahora </a>
+            </div>
+            <style>
+                @keyframes waPulse {
 
-                <style>
-                    @keyframes waPulse {
-
-                        0%,
-                        100% {
-                            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
-                            transform: scale(1);
-                        }
-
-                        50% {
-                            box-shadow: 0 0 35px rgba(37, 211, 102, 0.7);
-                            transform: scale(1.03);
-                        }
+                    0%,
+                    100% {
+                        box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+                        transform: scale(1);
                     }
-                </style>
 
-                <a href="#" class="cta-whatsapp" id="ctaWhatsApp">💬 Hablar con mi Asesor Experto</a>
-                <a href="https://alabolcar.vip" class="cta-secondary">🌐 Volver al Lobby Principal</a>
-            </div>
+                    50% {
+                        box-shadow: 0 0 35px rgba(37, 211, 102, 0.7);
+                        transform: scale(1.03);
+                    }
+                }
+            </style>
 
-            <!-- Finding Matches Screen -->
-            <div class="finding-matches" id="findingMatchesScreen">
-                <div class="radar"></div>
-                <div class="success-title" style="font-size: 20px;">Analizando Inventario...</div>
-                <div class="success-message">Cruzando tu presupuesto y preferencias con nuestra red de concesionarios a
-                    nivel nacional.</div>
-            </div>
-
-            <!-- Tinder Deck UI -->
-            <div class="tinder-deck" id="tinderDeck">
-                <!-- Cards injected via JS -->
-            </div>
-
-            <div class="tinder-actions" id="tinderActions">
-                <button class="t-btn pass" onclick="swipe('left')">❌</button>
-                <button class="t-btn match" onclick="swipe('right')">💖</button>
-            </div>
-
-            <!-- Navigation -->
-            <div class="nav-buttons" id="navButtons">
-                <button type="button" class="btn btn-back" id="backBtn" style="display:none;">← Atrás</button>
-                <button type="button" class="btn btn-next" id="nextBtn">Siguiente →</button>
-            </div>
+            <a href="https://wa.me/525568667571?text=Hola%2C%20acabo%20de%20llenar%20el%20Matchmaker%20de%20Alabol%20y%20quiero%20hablar%20con%20un%20asesor%20%F0%9F%9A%97"
+                class="btn-premium-gold" id="ctaWhatsApp" style="padding: 16px 36px; font-size: 16px;">
+                <i class="fa-brands fa-whatsapp"></i> Hablar con mi Asesor Experto
+            </a>
+            <a href="./index.html" class="btn-premium-teal"
+                style="margin-top: 15px; padding: 12px 24px; font-size: 14px;">🌐
+                Volver al Lobby Principal</a>
         </div>
 
-        <div class="footer">
-            <p>🔒 Tus datos están protegidos · <a href="https://alabolcar.vip">alabolcar.vip</a></p>
+        <!-- Finding Matches Screen -->
+        <div class="finding-matches" id="findingMatchesScreen">
+            <div class="radar"></div>
+            <div class="success-title" style="font-size: 20px;">Analizando Inventario...</div>
+            <div class="success-message">Cruzando tu presupuesto y preferencias con nuestra red de concesionarios a
+                nivel nacional.</div>
         </div>
+
+        <!-- Tinder Deck UI -->
+        <div class="tinder-deck" id="tinderDeck">
+            <!-- Cards injected via JS -->
+        </div>
+
+        <div class="tinder-actions" id="tinderActions">
+            <button class="t-btn pass" onclick="swipe('left')">❌</button>
+            <button class="t-btn match" onclick="swipe('right')">💖</button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons" id="navButtons">
+            <button type="button" class="btn-premium-teal" id="backBtn"
+                style="display:none; width: auto; font-size: 14px;">← Atrás</button>
+            <button type="button" class="btn-premium-gold" id="nextBtn" style="width: auto; min-width: 180px;">Siguiente
+                →</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🔒 Tus datos están protegidos · <a href="./index.html">alabolcar.vip</a></p>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1995,6 +2019,14 @@
             presupuestoMin: 150000, presupuestoMax: 350000,
             dineroListo: '', prioridad: '', usoAuto: '', notas: ''
         };
+
+        const personalityMessages = [
+            "Excelente inicio, vamos por tu auto ideal...",
+            "¡Gran elección! Ese estilo te va muy bien 🚗",
+            "Casi lo tenemos, los detalles hacen la diferencia ✨",
+            "¡Perfecto! Ya estamos diseñando tu match ideal 💰",
+            "¡Último paso! Cuéntanos más para sellar el trato 🎯"
+        ];
 
         // =====================
         // DOM
@@ -2152,6 +2184,17 @@
             progressLabel.textContent = `${currentStep + 1} / ${totalSteps}`;
             backBtn.style.display = currentStep > 0 ? 'block' : 'none';
             nextBtn.textContent = currentStep === totalSteps - 1 ? '🔥 Hacer Match' : 'Siguiente →';
+
+            // Personality Hook Update
+            const hook = document.getElementById('personalityHook');
+            if (hook) {
+                hook.style.opacity = 0;
+                setTimeout(() => {
+                    hook.textContent = personalityMessages[currentStep];
+                    hook.style.opacity = 1;
+                }, 300);
+            }
+
             updateValidation();
             document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -2519,8 +2562,43 @@
                 );
             }
 
+            // ==========================================
+            // N8N / MAKE WEBHOOK PUSH (Lead Capture)
+            // ==========================================
+            const finalPayload = {
+                fecha: new Date().toISOString(),
+                nombre: formData.nombre,
+                whatsapp: formData.whatsapp,
+                ciudad: formData.ciudad,
+                presupuesto_str: presupuestoText,
+                presupuesto_min: formData.presupuestoMin,
+                presupuesto_max: formData.presupuestoMax,
+                marcas_interes: formData.marcas.join(', '),
+                modelos_interes: modelosStr,
+                tipo_vehiculo: formData.tipoVehiculo,
+                dinero_listo: formData.dineroListo,
+                prioridad: formData.prioridad,
+                autos_likeados: likedCars || [],
+                tiene_matches: likedCars && likedCars.length > 0
+            };
+
+            const N8N_WEBHOOK_URL = 'https://hook.us2.make.com/z9xj6uu5nfuj54ko2eepzox336fly4ib';
+            fetch(N8N_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(finalPayload)
+            }).catch(err => console.warn('N8N Webhook connection failed:', err));
+
             document.getElementById('ctaWhatsApp').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
             successScreen.classList.add('active');
+
+            // Celebration Confetti!
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#d4af37', '#ffffff', '#004d2c']
+            });
         }
 
         // Generate Golden Bubbles Effect
